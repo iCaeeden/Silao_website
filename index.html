@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Portfolio</title>
+    <meta name="description" content="Personal Portfolio Website" />
+    <meta name="author" content="Author Name" /> <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles and Resets */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1C0E29;
+            --bg-secondary: #3B1A3B;
+            --accent-primary: #E3C9E3;
+            --accent-secondary: #DE8C4A;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            --glow: 0 0 15px rgba(227, 201, 227, 0.3);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Layout Styles */
+        .page-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation Styles */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid rgba(227, 201, 227, 0.1);
+            padding: 2rem 1rem;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(227, 201, 227, 0.2);
+            text-align: center;
+        }
+
+            .nav-header h3 {
+                font-family: 'Playfair Display', serif;
+                font-size: 2.2rem;
+                color: var(--accent-primary);
+            }
+
+        .nav-links {
+            list-style: none;
+        }
+
+            .nav-links li {
+                margin-bottom: 1rem;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 1rem 1.5rem;
+                font-size: 1.2rem;
+                color: var(--text-secondary);
+                border-radius: 8px;
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+                cursor: pointer;
+            }
+
+                .nav-links a:hover, .nav-links a.active {
+                    color: var(--text-primary);
+                    background-color: rgba(227, 201, 227, 0.1);
+                }
+
+                .nav-links a.active {
+                    font-weight: 600;
+                }
+
+                    .nav-links a.active::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        height: 100%;
+                        width: 4px;
+                        background-color: var(--accent-primary);
+                        border-radius: 0 4px 4px 0;
+                    }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Welcome Section Styles - NOW STICKY */
+        .welcome-section {
+            padding: 2.5rem 0;
+            text-align: center;
+            width: 100%;
+            margin-top: 0px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid rgba(227, 201, 227, 0.1);
+        }
+
+            .welcome-section h1 {
+                font-family: 'Playfair Display', serif;
+                font-size: 3.5rem;
+                font-weight: 800;
+                letter-spacing: 1px;
+                color: var(--accent-primary);
+                text-shadow: 0 0 10px rgba(227, 201, 227, 0.5);
+                animation: fadeInDown 1s ease-out forwards;
+            }
+
+        /* Content Background Styles */
+        .content-background {
+            flex: 1;
+            position: relative;
+            padding: 2rem;
+            overflow: hidden;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: calc(100vh - 9rem); /* Extended to take more vertical space */
+        }
+
+            /* Overlay to darken the background image */
+            .content-background::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(28, 14, 41, 0.6); /* Slightly reduced overlay for better visibility */
+                z-index: 0;
+            }
+
+        /* Background Elements */
+        .bg-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .bg-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            top: 15%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background-color: var(--bg-secondary);
+        }
+
+        .orb-2 {
+            bottom: 15%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background-color: var(--accent-secondary);
+            opacity: 0.2;
+            animation-delay: 2s;
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            padding: 0 5%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 650px;
+            padding-left: 10%;
+            animation: fadeInLeft 1s ease-out forwards;
+            background-color: rgba(59, 26, 59, 0.6); /* Semi-transparent purple background */
+            backdrop-filter: blur(5px); /* 5% blur as requested */
+            border: 1px solid rgba(227, 201, 227, 0.3); /* Thin outline */
+            border-radius: 12px; /* Slightly rounded edges */
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: var(--text-primary);
+            text-shadow: 0 0 10px rgba(227, 201, 227, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            color: var(--accent-primary);
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .cta-button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+        }
+
+            .cta-button.primary {
+                background-color: var(--accent-primary);
+                color: var(--bg-primary);
+            }
+
+            .cta-button.secondary {
+                background-color: var(--accent-secondary);
+                color: white;
+            }
+
+            .cta-button:hover {
+                transform: translateY(-3px) scale(1.05);
+                box-shadow: var(--shadow);
+            }
+
+        /* Profile Image Styles */
+        .profile-image-container {
+            position: relative;
+            width: 500px;
+            max-width: 40%;
+            aspect-ratio: 1/1;
+            animation: fadeInRight 1s ease-out forwards;
+        }
+
+        .profile-image-lowered {
+            margin-top: 50px;
+        }
+
+        .profile-image-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            background-color: var(--bg-secondary);
+            opacity: 0.3;
+            filter: blur(40px);
+            animation: glow 3s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        .profile-image-frame {
+            position: absolute;
+            inset: 8px;
+            border-radius: 16px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+            filter: contrast(1.1) brightness(1.05);
+        }
+
+            .profile-image:hover {
+                transform: scale(1.05);
+            }
+
+        /* Content Section Styles - For other pages */
+        .content-section {
+            padding: 2rem;
+            background-color: rgba(59, 26, 59, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(227, 201, 227, 0.1);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: -10px;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background-color: var(--accent-secondary);
+                border-radius: 3px;
+            }
+
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Profile Page Styles */
+        .profile-info {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-pic-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--accent-primary);
+            box-shadow: 0 0 15px rgba(227, 201, 227, 0.5);
+            flex-shrink: 0;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+            .profile-pic:hover {
+                transform: scale(1.1);
+            }
+
+        .profile-header-content {
+            flex-grow: 1;
+        }
+
+            .profile-header-content h2 {
+                font-size: 2.2rem;
+                color: var(--accent-primary);
+                margin-bottom: 0.5rem;
+            }
+
+            .profile-header-content p {
+                font-size: 1.2rem;
+                color: var(--text-secondary);
+            }
+
+        .experience-item, .education-item {
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--accent-secondary);
+            position: relative;
+        }
+
+            .experience-item h3, .education-item h3 {
+                font-size: 1.4rem;
+                margin-bottom: 0.3rem;
+                color: var(--text-primary);
+            }
+
+        .company, .school {
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--accent-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Hobbies Page Styles */
+        .hobbies-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .hobby-card {
+            padding: 2rem;
+            background-color: rgba(59, 26, 59, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(227, 201, 227, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+            .hobby-card:hover {
+                transform: translateY(-10px);
+                box-shadow: var(--shadow);
+                border-color: var(--accent-primary);
+            }
+
+        .hobby-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hobby-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .hobby-card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Contact Page Styles */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+            .contact-list li {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1rem;
+                font-size: 1.1rem;
+            }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--accent-primary);
+        }
+
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: rgba(59, 26, 59, 0.8);
+            color: var(--accent-primary);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent-primary);
+        }
+
+            .social-link:hover {
+                background-color: var(--accent-primary);
+                color: var(--bg-primary);
+                transform: translateY(-3px);
+            }
+
+        .contact-form-container {
+            background-color: rgba(59, 26, 59, 0.5);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(227, 201, 227, 0.1);
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+            .form-group label {
+                font-size: 1rem;
+                color: var(--accent-primary);
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 0.8rem 1rem;
+                background-color: rgba(28, 14, 41, 0.8);
+                border: 1px solid rgba(227, 201, 227, 0.2);
+                border-radius: 8px;
+                color: var(--text-primary);
+                font-family: 'Poppins', sans-serif;
+                transition: all 0.3s ease;
+            }
+
+                .form-group input:focus,
+                .form-group textarea:focus {
+                    outline: none;
+                    border-color: var(--accent-primary);
+                    box-shadow: 0 0 0 2px rgba(227, 201, 227, 0.2);
+                }
+
+        .submit-button {
+            padding: 1rem 2rem;
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            align-self: flex-start;
+        }
+
+            .submit-button:hover {
+                background-color: var(--accent-secondary);
+                color: white;
+                transform: translateY(-3px);
+                box-shadow: var(--shadow);
+            }
+
+        /* Page Display Control */
+        .page {
+            display: none;
+        }
+
+            .page.active {
+                display: block;
+            }
+
+        /* Mobile Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(227, 201, 227, 0.2);
+            border-radius: 8px;
+            color: var(--text-primary);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+            .menu-toggle:hover {
+                background-color: var(--accent-primary);
+                color: var(--bg-primary);
+            }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 15px 0px rgba(227, 201, 227, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 25px 5px rgba(227, 201, 227, 0.5);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.6rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 3rem;
+                padding: 0;
+            }
+
+            .hero-content {
+                max-width: 100%;
+                padding-left: 2rem;
+                padding-right: 2rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .profile-image-container {
+                max-width: 60%;
+                margin: 0 auto;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-pic-container {
+                margin: 0 auto;
+            }
+
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .hobbies-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                width: 250px;
+            }
+
+                .sidebar.active {
+                    transform: translateX(0);
+                }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .profile-image-container {
+                max-width: 80%;
+            }
+
+            .experience-item, .education-item {
+                padding-left: 1rem;
+            }
+
+            /* Mobile-specific layout: Image above text on Home page */
+            #home-page .hero-section {
+                flex-direction: column-reverse;
+            }
+
+            #home-page .profile-image-container {
+                max-width: 80%;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .welcome-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.3rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .profile-image-container {
+                max-width: 100%;
+            }
+
+            .hobbies-container {
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <!-- Sidebar Navigation --> <nav class="sidebar"> <div class="nav-header"> <h3>Menu</h3> </div> <ul class="nav-links"> <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li> <li><a onclick="showPage('profile')" id="nav-profile">Profile</a></li> <li><a onclick="showPage('hobbies')" id="nav-hobbies">Hobbies</a></li> <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li> </ul> </nav> <!-- Main Content Area --> <main class="main-content">
+            <!-- Background Elements --> <div class="bg-pattern"></div> <div class="bg-orb orb-1"></div> <div class="bg-orb orb-2"></div>
+            <!-- Home Page -->
+            <div id="home-page" class="page active">
+                <!-- Welcome Section - NOW STICKY -->
+                <div class="welcome-section">
+                    <h1>Welcome to My Portfolio</h1>
+                </div>
+
+                <!-- Content Background -->
+                <div class="content-background">
+                    <!-- Hero Section -->
+                    <section class="hero-section">
+                        <div class="hero-content">
+                            <h2 class="hero-title">Caden Silao</h2>
+                            <p class="hero-subtitle">Creative Designer & Developer</p>
+                            <p class="hero-description">
+                                Passionate web designer and developer with expertise in creating beautiful, responsive websites and applications. Specializing in UI/UX design and modern web technologies to bring creative visions to life.
+                            </p>
+                            <div class="cta-buttons">
+                                <a onclick="showPage('profile')" class="cta-button primary">View Profile</a>
+                                <a onclick="showPage('contact')" class="cta-button secondary">Get in Touch</a>
+                            </div>
+                        </div>
+
+                        <!-- Profile Image -->
+                        <div class="profile-image-container">
+                            <div class="profile-image-glow"></div>
+                            <div class="profile-image-frame">
+
+                                <img src="homepfp.png" alt="Caden Silao" class="profile-image">
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profile-page" class="page">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h1>My Profile</h1>
+                </div>
+
+                <!-- Content Background -->
+                <div class="content-background">
+                    <!-- Profile Content -->
+                    <section class="content-section">
+                        <div class="profile-info">
+                            <!-- Profile Header with Profile Picture -->
+                            <div class="profile-header">
+                                <div class="profile-pic-container">
+
+                                    <img src="pfp.png" alt="Caden Silao Profile Picture" class="profile-pic">
+                                </div>
+                                <div class="profile-header-content">
+                                    <h2>Caden Silao</h2>
+                                    <p>Creative Designer & Developer with a passion for creating beautiful and functional web experiences.</p>
+                                </div>
+                            </div>
+
+                            <h2 class="section-title">About Me</h2>
+                            <p class="section-text">
+                                With over 5 years of experience in web design and development, I specialize in creating visually stunning and user-friendly digital experiences. My approach combines aesthetic sensibility with technical expertise to deliver websites that not only look great but also perform seamlessly across all devices. I'm passionate about staying current with emerging technologies and design trends to provide cutting-edge solutions for my clients.
+                            </p>
+
+                            <h2 class="section-title">Experience</h2>
+                            <div class="experience-item">
+                                <h3>Senior Designer</h3>
+                                <p class="company">Creative Agency Inc, 2020 - Present</p>
+                                <p>Lead designer for major client projects, overseeing UI/UX design from concept to completion. Supervise a team of junior designers and collaborate with development teams to ensure design integrity throughout implementation.</p>
+                            </div>
+
+                            <div class="experience-item">
+                                <h3>UI/UX Designer</h3>
+                                <p class="company">Design Studio, 2018 - 2020</p>
+                                <p>Created responsive website designs and interactive prototypes for diverse clients. Conducted user research and usability testing to optimize user experiences and increase conversion rates.</p>
+                            </div>
+
+                            <h2 class="section-title">Education</h2>
+                            <div class="education-item">
+                                <h3>Master of Design</h3>
+                                <p class="school">University of Design, 2018</p>
+                                <p>Specialized in digital media design with focus on interactive experiences. Graduated with honors.</p>
+                            </div>
+
+                            <div class="education-item">
+                                <h3>Bachelor of Arts</h3>
+                                <p class="school">Creative Arts College, 2016</p>
+                                <p>Major in Visual Communication with minor in Computer Science. Recipient of the Dean's Award for Outstanding Design Project.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Hobbies Page -->
+            <div id="hobbies-page" class="page">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h1>My Hobbies & Interests</h1>
+                </div>
+
+                <!-- Content Background -->
+                <div class="content-background">
+                    <!-- Hobbies Content -->
+                    <section class="content-section">
+                        <div class="hobbies-container">
+                            <div class="hobby-card">
+                                <div class="hobby-icon">🎨</div>
+                                <h3>Digital Art</h3>
+                                <p>Creating digital illustrations and exploring new techniques in graphic design. I enjoy experimenting with different styles and color palettes to expand my creative horizons.</p>
+                            </div>
+
+                            <div class="hobby-card">
+                                <div class="hobby-icon">📚</div>
+                                <h3>Reading</h3>
+                                <p>Avid reader of design books, sci-fi novels, and philosophical works. Reading helps me gain new perspectives and inspires my creative process.</p>
+                            </div>
+
+                            <div class="hobby-card">
+                                <div class="hobby-icon">🎮</div>
+                                <h3>Gaming</h3>
+                                <p>Enthusiast of games with innovative designs and storytelling. I appreciate games as an interactive art form and source of UI/UX inspiration.</p>
+                            </div>
+
+                            <div class="hobby-card">
+                                <div class="hobby-icon">🏔️</div>
+                                <h3>Hiking</h3>
+                                <p>Weekend explorer of mountain trails and natural landscapes. Connecting with nature helps clear my mind and fuels my creativity.</p>
+                            </div>
+
+                            <div class="hobby-card">
+                                <div class="hobby-icon">🎧</div>
+                                <h3>Music</h3>
+                                <p>Passionate about indie music and learning to play guitar. I find that music enhances my focus while designing and coding.</p>
+                            </div>
+
+                            <div class="hobby-card">
+                                <div class="hobby-icon">✈️</div>
+                                <h3>Traveling</h3>
+                                <p>Exploring new cultures and architectural designs around the world. Travel broadens my design perspective and introduces me to diverse aesthetic sensibilities.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contact-page" class="page">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h1>Get In Touch</h1>
+                </div>
+
+                <!-- Content Background -->
+                <div class="content-background">
+                    <!-- Contact Content -->
+                    <section class="content-section">
+                        <div class="contact-container">
+                            <div class="contact-info">
+                                <h2 class="section-title">Contact Information</h2>
+                                <ul class="contact-list">
+                                    <li>
+                                        <span class="contact-icon">📧</span>
+                                        <span class="contact-text">caden.silao@designmail.com</span>
+                                    </li>
+                                    <li>
+                                        <span class="contact-icon">📱</span>
+                                        <span class="contact-text">+1 (555) 123-4567</span>
+                                    </li>
+                                    <li>
+                                        <span class="contact-icon">📍</span>
+                                        <span class="contact-text">San Francisco, California</span>
+                                    </li>
+                                </ul>
+
+                                <h2 class="section-title">Social Media</h2>
+                                <div class="social-links">
+                                    <a href="#" class="social-link">LinkedIn</a>
+                                    <a href="#" class="social-link">GitHub</a>
+                                    <a href="#" class="social-link">Instagram</a>
+                                    <a href="#" class="social-link">Dribbble</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-form-container">
+                                <h2 class="section-title">Send a Message</h2>
+                                <form class="contact-form">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" id="name" name="name" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" name="email" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="subject">Subject</label>
+                                        <input type="text" id="subject" name="subject" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="message">Message</label>
+                                        <textarea id="message" name="message" rows="5" required></textarea>
+                                    </div>
+
+                                    <button type="submit" class="submit-button">Send Message</button>
+                                </form>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageName + '-page').classList.add('active');
+
+            // Update navigation
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById('nav-' + pageName).classList.add('active');
+        }
+
+        // Mobile Menu Toggle
+        document.addEventListener('DOMContentLoaded', function () {
+            // Create menu toggle button
+            const menuToggle = document.createElement('button');
+            menuToggle.className = 'menu-toggle';
+            menuToggle.innerHTML = '☰';
+            document.body.appendChild(menuToggle);
+
+            // Toggle menu
+            menuToggle.addEventListener('click', function () {
+                const sidebar = document.querySelector('.sidebar');
+                sidebar.classList.toggle('active');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function (event) {
+                const sidebar = document.querySelector('.sidebar');
+                const menuToggle = document.querySelector('.menu-toggle');
+
+                if (sidebar.classList.contains('active') &&
+                    !sidebar.contains(event.target) &&
+                    event.target !== menuToggle) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
